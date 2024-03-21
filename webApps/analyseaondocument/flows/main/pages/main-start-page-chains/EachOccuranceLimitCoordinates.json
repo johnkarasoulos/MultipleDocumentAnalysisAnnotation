@@ -1,0 +1,98 @@
+{
+  "root": "callFunctionCalculateHeight",
+  "description": "",
+  "actions": {
+    "callFunctionCalculateHeight": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateHeight",
+        "params": [
+          "{{ $application.variables.EachOccurrenceLimit_y_downright }}",
+          "{{ $application.variables.EachOccurrenceLimit_y_upright }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesEachOccurrenceLimitHeight"
+      }
+    },
+    "callFunctionCalculateWidth": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateWidth",
+        "params": [
+          "{{ $application.variables.EachOccurrenceLimit_x_downright }}",
+          "{{ $application.variables.EachOccurrenceLimit_x_downleft }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesEachOccurrenceLimitWidth"
+      }
+    },
+    "assignVariablesEachOccurrenceLimitHeight": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.EachOccurrenceLimit_height": {
+          "source": "{{ $chain.results.callFunctionCalculateHeight }}"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionCalculateWidth"
+      }
+    },
+    "assignVariablesEachOccurrenceLimitWidth": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.EachOccurrenceLimit_width": {
+          "source": "{{ $chain.results.callFunctionCalculateWidth }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesEachOccurrenceLimitX"
+      }
+    },
+    "assignVariablesEachOccurrenceLimitX": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.EachOccurrenceLimit_x": {
+          "source": "{{ $application.variables.EachOccurrenceLimit_x_downleft }}"
+        },
+        "$application.variables.EachOccurrenceLimit_y": {
+          "source": "{{ $application.variables.EachOccurrenceLimit_y_downleft }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesDocFieldCurrentYcoord"
+      }
+    },
+    "assignVariablesDocFieldCurrentYcoord": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.docField_current_Ycoord": {
+          "source": "{{ $application.variables.EachOccurrenceLimit_y }}"
+        }
+      },
+      "outcomes": {
+        "success": "callChainCalculateCurrentPage"
+      }
+    },
+    "callChainCalculateCurrentPage": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "calculateCurrentPage"
+      },
+      "outcomes": {
+        "success": "assignVariablesEachOccurrenceLimitPageNumber"
+      }
+    },
+    "assignVariablesEachOccurrenceLimitPageNumber": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.EachOccurrenceLimit_pageNumber": {
+          "source": "{{ $page.variables.currentPage }}"
+        }
+      }
+    }
+  }
+}

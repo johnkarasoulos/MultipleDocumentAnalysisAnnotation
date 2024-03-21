@@ -1,0 +1,166 @@
+{
+  "title": "main",
+  "description": "",
+  "variables": {
+    "AggregateLimit": {
+      "type": "string"
+    },
+    "AnnualPremium": {
+      "type": "string"
+    },
+    "attachmentPreview": {
+      "type": "boolean"
+    },
+    "Commission": {
+      "type": "string"
+    },
+    "currentPage": {
+      "type": "number",
+      "defaultValue": 0
+    },
+    "docField_current_Ycoord": {
+      "type": "number",
+      "defaultValue": -1
+    },
+    "docField_previous_Ycoord": {
+      "type": "number",
+      "defaultValue": 0
+    },
+    "EachOccurrenceLimit": {
+      "type": "string"
+    },
+    "fileBodyForPreview": {
+      "type": "any"
+    },
+    "filePreview": {
+      "type": "boolean"
+    },
+    "fileURL": {
+      "type": "string"
+    },
+    "holdFile": {
+      "type": "any"
+    },
+    "InsuranceAIServiceResponse": {
+      "type": "analyseDocument-response"
+    },
+    "NamedInsured": {
+      "type": "string"
+    },
+    "PolicyPeriod": {
+      "type": "string"
+    },
+    "previousPage": {
+      "type": "number",
+      "defaultValue": 0
+    },
+    "Rating": {
+      "type": "string"
+    },
+    "ReceivedFieldsFromAI": {
+      "type": "string"
+    },
+    "TerrorismPremium": {
+      "type": "string"
+    },
+    "TotalPremium": {
+      "type": "string"
+    }
+
+  },
+  "metadata": {},
+  "types": {
+
+    "@decorators.analyseDocument-response": {
+      "endpoint": "analyseDocument",
+      "service": "ics",
+      "path": "response"
+    },
+    "analyseDocument-response": {
+      "detectedDocument": [
+        {
+          "documentName": "string"
+        }
+      ],
+      "documentFields": [
+        {
+          "boundingPolygon": {
+            "normalizedVertices": [
+              {
+                "x": "number",
+                "y": "number"
+              }
+            ]
+          },
+          "fieldLabel": "string",
+          "fieldValue": "string"
+
+        }
+      ]
+    }
+
+  },
+  "eventListeners": {
+    "filePickerSelect": {
+      "chains": [
+        {
+          "chainId": "FilePickerSelectChain",
+          "parameters": {
+            "files": "[[ Array.prototype.slice.call($event.detail.files) ]]"
+          }
+        }
+      ]
+    },
+    "hyperlinkClick": {
+      "chains": [
+        {
+          "chainId": "HyperlinkClickChain"
+        }
+      ]
+    },
+    "myFileSpAttachmentsViewerAction": {
+      "chains": [
+        {
+          "chainId": "AttachmentsViewerSpAttachmentsViewerActionChain",
+          "parameters": {
+            "eventType": "{{$event.detail.type}}"
+          }
+        }
+      ]
+    },
+    "toggleDrawer": {
+      "chains": [
+        {
+          "chainId": "application:toggleDrawerHandler"
+        }
+      ]
+    }
+
+  },
+  "imports": {
+    "components": {
+      "oj-avatar": {
+        "path": "ojs/ojavatar"
+      },
+      "oj-button": {
+        "path": "ojs/ojbutton"
+      },
+      "oj-file-picker": {
+        "path": "ojs/ojfilepicker"
+      },
+      "oj-form-layout": {
+        "path": "ojs/ojformlayout"
+      },
+      "oj-input-text": {
+        "path": "ojs/ojinputtext"
+      },
+      "oj-menu": {
+        "path": "ojs/ojmenu"
+      },
+      "oj-option": {
+        "path": "ojs/ojoption"
+      }
+
+    }
+  }
+}

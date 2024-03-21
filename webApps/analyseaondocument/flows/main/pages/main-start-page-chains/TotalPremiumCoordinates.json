@@ -1,0 +1,98 @@
+{
+  "root": "callFunctionCalculateHeight",
+  "description": "",
+  "actions": {
+    "callFunctionCalculateHeight": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateHeight",
+        "params": [
+          "{{ $application.variables.TotalPremium_y_downright }}",
+          "{{ $application.variables.TotalPremium_y_upright }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesTotalPremiumHeight"
+      }
+    },
+    "callFunctionCalculateWidth": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateWidth",
+        "params": [
+          "{{ $application.variables.TotalPremium_x_downright }}",
+          "{{ $application.variables.TotalPremium_x_downleft }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesTotalPremiumWidth"
+      }
+    },
+    "assignVariablesTotalPremiumHeight": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.TotalPremium_height": {
+          "source": "{{ $chain.results.callFunctionCalculateHeight }}"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionCalculateWidth"
+      }
+    },
+    "assignVariablesTotalPremiumWidth": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.TotalPremium_width": {
+          "source": "{{ $chain.results.callFunctionCalculateWidth }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesTotalPremiumX"
+      }
+    },
+    "assignVariablesTotalPremiumX": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.TotalPremium_X": {
+          "source": "{{ $application.variables.TotalPremium_x_downleft }}"
+        },
+        "$application.variables.TotalPremium_Y": {
+          "source": "{{ $application.variables.TotalPremium_y_downleft }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesDocFieldCurrentYcoord"
+      }
+    },
+    "assignVariablesDocFieldCurrentYcoord": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.docField_current_Ycoord": {
+          "source": "{{ $application.variables.TotalPremium_Y }}"
+        }
+      },
+      "outcomes": {
+        "success": "callChainCalculateCurrentPage"
+      }
+    },
+    "callChainCalculateCurrentPage": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "calculateCurrentPage"
+      },
+      "outcomes": {
+        "success": "assignVariablesTotalPremiumPageNumber"
+      }
+    },
+    "assignVariablesTotalPremiumPageNumber": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.TotalPremium_pageNumber": {
+          "source": "{{ $page.variables.currentPage }}"
+        }
+      }
+    }
+  }
+}

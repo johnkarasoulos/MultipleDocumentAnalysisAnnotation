@@ -1,0 +1,98 @@
+{
+  "root": "callFunctionCalculateWidth",
+  "description": "",
+  "actions": {
+    "callFunctionCalculateWidth": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateWidth",
+        "params": [
+          "{{ $application.variables.Rating_x_downright }}",
+          "{{ $application.variables.Rating_x_downleft }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesRatingWidth"
+      }
+    },
+    "callFunctionCalculateHeight": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateHeight",
+        "params": [
+          "{{ $application.variables.Rating_y_downright }}",
+          "{{ $application.variables.Rating_y_upright }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesRatingHeight"
+      }
+    },
+    "assignVariablesRatingWidth": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.Rating_width": {
+          "source": "{{ $chain.results.callFunctionCalculateWidth }}"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionCalculateHeight"
+      }
+    },
+    "assignVariablesRatingHeight": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.Rating_height": {
+          "source": "{{ $chain.results.callFunctionCalculateHeight }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesRatingX"
+      }
+    },
+    "assignVariablesRatingX": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.Rating_x": {
+          "source": "{{ $application.variables.Rating_x_downleft }}"
+        },
+        "$application.variables.Rating_y": {
+          "source": "{{ $application.variables.Rating_y_downleft }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesDocFieldCurrentYcoord"
+      }
+    },
+    "assignVariablesDocFieldCurrentYcoord": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.docField_current_Ycoord": {
+          "source": "{{ $application.variables.Rating_y }}"
+        }
+      },
+      "outcomes": {
+        "success": "callChainCalculateCurrentPage"
+      }
+    },
+    "callChainCalculateCurrentPage": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "calculateCurrentPage"
+      },
+      "outcomes": {
+        "success": "assignVariablesRatingPageNumber"
+      }
+    },
+    "assignVariablesRatingPageNumber": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.Rating_pageNumber": {
+          "source": "{{ $page.variables.currentPage }}"
+        }
+      }
+    }
+  }
+}

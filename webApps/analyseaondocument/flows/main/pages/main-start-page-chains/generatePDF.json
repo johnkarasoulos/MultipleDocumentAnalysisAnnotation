@@ -1,0 +1,153 @@
+{
+  "root": "callChainNamedInsuredCoordinates",
+  "description": "",
+  "actions": {
+    "callFunctionCreateUpdatedPDF": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $page.functions ]]",
+        "functionName": "createUpdatedPDF",
+        "params": [
+          "{{ $page.variables.holdFile.data }}",
+          "{{ $application.variables.NamedInsured_x }}"          ,
+          "{{ ($application.variables.NamedInsured_y + $application.variables.NamedInsured_Yadjustment ) }}"          ,
+          "{{ $application.variables.NamedInsured_width }}"          ,
+          "{{ $application.variables.NamedInsured_height }}",
+          "{{ $application.variables.NamedInsured_pageNumber }}",
+          "{{ $application.variables.Rating_x }}"          ,
+          "{{ ($application.variables.Rating_y + $application.variables.Rating_Yadjustment) }}"          ,
+          "{{ $application.variables.Rating_width }}"          ,
+          "{{ $application.variables.Rating_height }}",
+          "{{ $application.variables.Rating_pageNumber }}",
+          "{{ $application.variables.PolicyPeriod_x }}"          ,
+          "{{ ($application.variables.PolicyPeriod_y + $application.variables.PolicyPeriod_Yadjustment) }}"          ,
+          "{{ $application.variables.PolicyPeriod_width }}"          ,
+          "{{ $application.variables.PolicyPeriod_height }}",
+          "{{ $application.variables.PolicyPeriod_pageNumber }}",
+          "{{ $application.variables.EachOccurrenceLimit_x }}"          ,
+          "{{ ($application.variables.EachOccurrenceLimit_y + $application.variables.EachOccurrenceLimit_Yadjustment) }}"          ,
+          "{{ $application.variables.EachOccurrenceLimit_width }}"          ,
+          "{{ $application.variables.EachOccurrenceLimit_height }}"          ,
+          "{{ $application.variables.EachOccurrenceLimit_pageNumber }}"          ,
+          "{{ $application.variables.AggregateLimit_X }}"          ,
+          "{{ ($application.variables.AggregateLimit_Y + $application.variables.AggregateLimit_Yadjustment) }}"          ,
+          "{{ $application.variables.AggregateLimit_width }}"          ,
+          "{{ $application.variables.AggregateLimit_height }}"          ,
+          "{{ $application.variables.AggregateLimit_pageNumber }}"          ,
+          "{{ $application.variables.AnnualPremium_X }}"          ,
+          "{{ ($application.variables.AnnualPremium_Y + $application.variables.AnnualPremium_Yadjustment) }}"          ,
+          "{{ $application.variables.AnnualPremium_width }}"          ,
+          "{{ $application.variables.AnnualPremium_height }}",
+          "{{ $application.variables.AnnualPremium_pageNumber }}",
+          "{{ $application.variables.TerrorismPremium_X }}"          ,
+          "{{ ($application.variables.TerrorismPremium_Y + $application.variables.TerrorismPremium_Yadjustment) }}"          ,
+          "{{ $application.variables.TerrorismPremium_width }}"          ,
+          "{{ $application.variables.TerrorismPremium_height }}"          ,
+          "{{ $application.variables.TerrorismPremium_pageNumber }}"          ,
+          "{{ $application.variables.TotalPremium_X }}"          ,
+          "{{ ($application.variables.TotalPremium_Y + $application.variables.TotalPremium_Yadjustment) }}"          ,
+          "{{ $application.variables.TotalPremium_width }}"          ,
+          "{{ $application.variables.TotalPremium_height }}"          ,
+          "{{ $application.variables.TotalPremium_pageNumber }}"          ,
+          "{{ $application.variables.Commission_X }}"          ,
+          "{{ ($application.variables.Commission_Y + $application.variables.Commission_Yadjustment) }}"          ,
+          "{{ $application.variables.Commission_width }}"          ,
+          "{{ $application.variables.Commission_height }}",
+          "{{ $application.variables.Commission_pageNumber }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesFileURL"
+      }
+    },
+    "assignVariablesFileURL": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.fileURL": {
+          "source": "{{ $chain.results.callFunctionCreateUpdatedPDF }}"
+        }
+      }
+    },
+    "callChainRatingCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "RatingCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainPolicyPeriodCoordinates"
+      }
+    },
+    "callChainPolicyPeriodCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "PolicyPeriodCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainEachOccuranceLimitCoordinates"
+      }
+    },
+    "callChainNamedInsuredCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "NamedInsuredCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainRatingCoordinates"
+      }
+    },
+    "callChainEachOccuranceLimitCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "EachOccuranceLimitCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainAggregateLimitCoordinates"
+      }
+    },
+    "callChainAggregateLimitCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "AggregateLimitCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainAnnualPremiumCoordinates"
+      }
+    },
+    "callChainAnnualPremiumCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "AnnualPremiumCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainTerroristPremiumCoordinates"
+      }
+    },
+    "callChainTerroristPremiumCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "TerroristPremiumCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainTotalPremiumCoordinates"
+      }
+    },
+    "callChainTotalPremiumCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "TotalPremiumCoordinates"
+      },
+      "outcomes": {
+        "success": "callChainCommissionCoordinates"
+      }
+    },
+    "callChainCommissionCoordinates": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "CommissionCoordinates"
+      },
+      "outcomes": {
+        "success": "callFunctionCreateUpdatedPDF"
+      }
+    }
+  }
+}

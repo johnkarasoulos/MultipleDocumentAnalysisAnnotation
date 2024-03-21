@@ -1,0 +1,877 @@
+{
+  "id": "sendfiletopasspkv",
+  "description": "A new VB app",
+  "defaultPage": "shell",
+  "services": {},
+  "translations": {
+    "app": {
+      "path": "./resources/strings/app/nls/app-strings"
+    }
+  },
+  "events": {
+    "navigateToItem": {
+      "payloadType": {
+        "item": "string"
+      },
+      "description": "Event to configure navigation between items/tabs."
+    },
+    "toggleDrawer": {
+      "description": "Event to toggle the drawer."
+    }
+  },
+  "types": {
+    "@decorators.AIresponse": {
+      "endpoint": "postPOC_PASSP_KV_EXTRA_INLIN_SYNC1_0Execute",
+      "service": "Integration_AI_DocumentUnderstanding",
+      "path": "response"
+    },
+    "@decorators.analyseDocumentCoordinates": {
+      "endpoint": "analyseDocument",
+      "service": "ics",
+      "path": "response"
+    },
+    "AIresponse": {
+      "detectedDocumentTypes": [
+        {
+          "confidence": "number",
+          "documentType": "string"
+        }
+      ],
+      "documentFields": [
+        {
+          "fieldLabel": "string",
+          "fieldValue": "string"
+        }
+      ]
+    },
+    "analyseDocumentCoordinates": {
+      "documentFields": [
+        {
+          "boundingPolygon": {
+            "normalizedVertices": [
+              {
+                "x": "number",
+                "y": "number"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "navigationItem": {
+      "id": "string",
+      "name": "string",
+      "iconClass": "string"
+    },
+    "globalHeaderItem": {
+      "id": "string",
+      "name": "string",
+      "iconClass": "string"
+    },
+    "avatarMenuItem": {
+      "id": "string",
+      "name": "string",
+      "iconClass": "string"
+    }
+
+  },
+  "variables": {
+    "AggregateLimit_height": {
+      "type": "number"
+    },
+    "AggregateLimit_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "AggregateLimit_width": {
+      "type": "number"
+    },
+    "AggregateLimit_X": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_x_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_x_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_x_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_x_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_Y": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_y_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_y_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_y_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_y_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AggregateLimit_Yadjustment": {
+      "type": "number",
+      "defaultValue": -5
+    },
+    "AnnualPremium_height": {
+      "type": "number"
+    },
+    "AnnualPremium_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "AnnualPremium_width": {
+      "type": "number"
+    },
+    "AnnualPremium_X": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_x_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_x_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_x_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_x_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_Y": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_y_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_y_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_y_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_y_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "AnnualPremium_Yadjustment": {
+      "type": "number",
+      "defaultValue": -5
+    },
+    "Commission_height": {
+      "type": "number"
+    },
+    "Commission_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "Commission_width": {
+      "type": "number"
+    },
+    "Commission_X": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_x_downleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_x_downright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_x_upleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_x_upright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_Y": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_y_downleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_y_downright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_y_upleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_y_upright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "Commission_Yadjustment": {
+      "type": "number",
+      "defaultValue": -1
+    },
+    "docNumberOfPages": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "EachOccurrenceLimit_height": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "EachOccurrenceLimit_width": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_x": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_x_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_x_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_x_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_x_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_y": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_y_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_y_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_y_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_y_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "EachOccurrenceLimit_Yadjustment": {
+      "type": "number",
+      "defaultValue": -5
+    },
+    "globalHeadersADP": {
+      "type": "vb/ArrayDataProvider2",
+      "description": "The model describing the Global Applications headers",
+      "defaultValue": {
+        "keyAttributes": "id",
+        "data": "{{ $variables.globalHeadersData }}",
+        "itemType": "navigationItem"
+      }
+    },
+    "Limit_height": {
+      "type": "number"
+    },
+    "Limit_width": {
+      "type": "number"
+    },
+    "listofCoordinates": {
+      "type": "analyseDocumentCoordinates"
+    },
+    "NamedInsured_height": {
+      "type": "number"
+    },
+    "NamedInsured_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "NamedInsured_width": {
+      "type": "number",
+      "input": "fromCaller"
+    },
+    "NamedInsured_x": {
+      "type": "number"
+    },
+    "NamedInsured_x_downleft": {
+      "type": "number"
+    },
+    "NamedInsured_x_downright": {
+      "type": "number"
+    },
+    "NamedInsured_x_upleft": {
+      "type": "number"
+    },
+    "NamedInsured_x_upright": {
+      "type": "number"
+    },
+    "NamedInsured_y": {
+      "type": "number"
+    },
+    "NamedInsured_y_downleft": {
+      "type": "number"
+    },
+    "NamedInsured_y_downright": {
+      "type": "number"
+    },
+    "NamedInsured_y_upleft": {
+      "type": "number"
+    },
+    "NamedInsured_y_upright": {
+      "type": "number"
+    },
+    "NamedInsured_Yadjustment": {
+      "type": "number",
+      "defaultValue": 0
+    },
+    "navigationADP": {
+      "type": "vb/ArrayDataProvider2",
+      "description": "The model describing the flows in the app",
+      "defaultValue": {
+        "keyAttributes": "id",
+        "data": "{{ $variables.navigationData }}",
+        "itemType": "navigationItem"
+      }
+    },
+    "avatarItems": {
+      "type": "avatarMenuItem[]",
+      "defaultValue": [
+        {
+          "name": "Sign Out",
+          "id": "signout",
+          "iconClass": "oj-ux-ico-logout"
+        }
+      ]
+    },
+    "globalHeadersData": {
+      "type": "globalHeaderItem[]",
+      "defaultValue": [
+        {
+          "name": "Example 1",
+          "id": "settings",
+          "iconClass": "oj-ux-ico-settings"
+        },
+        {
+          "name": "Example 2",
+          "id": "like",
+          "iconClass": "oj-ux-ico-thumbs-up"
+        },
+        {
+          "name": "Example 3",
+          "id": "bookmark",
+          "iconClass": "oj-ux-ico-bookmark-add"
+        }
+      ]
+    },
+    "navigationData": {
+      "type": "navigationItem[]",
+      "defaultValue": []
+    },
+    "PolicyPeriod_height": {
+      "type": "number"
+    },
+    "PolicyPeriod_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "PolicyPeriod_width": {
+      "type": "number"
+    },
+    "PolicyPeriod_x": {
+      "type": "number"
+    },
+    "PolicyPeriod_x_downleft": {
+      "type": "number"
+    },
+    "PolicyPeriod_x_downright": {
+      "type": "number"
+    },
+    "PolicyPeriod_x_upleft": {
+      "type": "number"
+    },
+    "PolicyPeriod_x_upright": {
+      "type": "number"
+    },
+    "PolicyPeriod_y": {
+      "type": "number"
+    },
+    "PolicyPeriod_y_downleft": {
+      "type": "number"
+    },
+    "PolicyPeriod_y_downright": {
+      "type": "number"
+    },
+    "PolicyPeriod_y_upleft": {
+      "type": "number"
+    },
+    "PolicyPeriod_y_upright": {
+      "type": "number"
+    },
+    "PolicyPeriod_Yadjustment": {
+      "type": "number",
+      "defaultValue": -2
+    },
+    "Rating_height": {
+      "type": "number"
+    },
+    "Rating_pageNumber": {
+      "type": "number"
+    },
+    "Rating_width": {
+      "type": "number"
+    },
+    "Rating_x": {
+      "type": "number"
+    },
+    "Rating_x_downleft": {
+      "type": "number"
+    },
+    "Rating_x_downright": {
+      "type": "number"
+    },
+    "Rating_x_upleft": {
+      "type": "number"
+    },
+    "Rating_x_upright": {
+      "type": "number"
+    },
+    "Rating_y": {
+      "type": "number"
+    },
+    "Rating_y_downleft": {
+      "type": "number"
+    },
+    "Rating_y_downright": {
+      "type": "number"
+    },
+    "Rating_y_upleft": {
+      "type": "number"
+    },
+    "Rating_y_upright": {
+      "type": "number"
+    },
+    "Rating_Yadjustment": {
+      "type": "number",
+      "defaultValue": -2
+    },
+    "TerrorismPremium_height": {
+      "type": "number"
+    },
+    "TerrorismPremium_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "TerrorismPremium_width": {
+      "type": "number"
+    },
+    "TerrorismPremium_X": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_x_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_x_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_x_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_x_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_Y": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_y_downleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_y_downright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_y_upleft": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_y_upright": {
+      "defaultValue": -5,
+      "type": "number"
+    },
+    "TerrorismPremium_Yadjustment": {
+      "type": "number",
+      "defaultValue": -7
+    },
+    "TotalPremium_height": {
+      "type": "number"
+    },
+    "TotalPremium_pageNumber": {
+      "type": "number",
+      "defaultValue": 1
+    },
+    "TotalPremium_width": {
+      "type": "number"
+    },
+    "TotalPremium_X": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_x_downleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_x_downright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_x_upleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_x_upright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_Y": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_y_downleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_y_downright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_y_upleft": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_y_upright": {
+      "defaultValue": -10,
+      "type": "number"
+    },
+    "TotalPremium_Yadjustment": {
+      "type": "number",
+      "defaultValue": -10
+    }
+
+  },
+  "eventListeners": {
+    "vbResourceChanged": {
+      "chains": [
+        {
+          "chainId": "resourceChangedHandler",
+          "parameters": {
+            "event": "{{ $event }}"
+          }
+        }
+      ]
+    }
+  },
+  "userConfig": {
+    "type": "vb/DefaultSecurityProvider",
+    "configuration": {},
+    "embedding": "deny"
+  },
+  "security": {},
+  "imports": {
+    "css": [
+      "https://static.oracle.com/cdn/fnd/gallery/2210.0.0/images/iconfont/ojuxIconFont.min.css",
+      "/resources/css/app.css"
+    ]
+  },
+  "@dt": {
+    "applicationTemplateType": "redwood"
+  },
+  "requirejs": {
+    "paths": {
+      "oj-dyn": "https://static.oracle.com/cdn/jet/packs/oj-dyn/13.0.0/min/",
+      "oj-dynamic": "https://static.oracle.com/cdn/jet/packs/oj-dynamic/13.0.0/min/",
+      "oj-sp": "https://static.oracle.com/cdn//spectra-ui/oj-sp/2210.3.0/"
+
+    },
+    "bundles": {
+      "oj-dyn/component-bundle": [
+        "oj-dyn/bind-field/loader",
+        "oj-dyn/bind-section/loader",
+        "oj-dyn/container/loader",
+        "oj-dyn/form/loader",
+        "oj-dyn/form/resources/nls"
+      ],
+      "oj-dynamic/common-bundle": [
+        "oj-dynamic/providers/MetadataProviderFactory",
+        "oj-dynamic/providers/TransformState",
+        "oj-dynamic/providers/MetadataUtils",
+        "oj-dynamic/providers/MetadataContentManager",
+        "oj-dynamic/providers/MetadataTransformer",
+        "oj-dynamic/providers/AdfBCExtension",
+        "oj-dynamic/providers/DefaultFetchable",
+        "oj-dynamic/providers/DynamicDataProvider",
+        "oj-dynamic/providers/DynamicLayoutEngine",
+        "oj-dynamic/providers/MetadataProviderManager",
+        "oj-dynamic/providers/JsonMetadataProvider",
+        "oj-dynamic/providers/ServiceMetadataProvider",
+        "oj-dynamic/providers/DynamicLayoutProvider",
+        "oj-dynamic/providers/DynamicLayoutMetadataProvider",
+        "oj-dynamic/providers/DynamicLayoutMetadataProviderFactory",
+        "oj-dynamic/providers/Extension",
+        "oj-dynamic/providers/Fetchable",
+        "oj-dynamic/providers/JsonMetadataProviderFactory",
+        "oj-dynamic/providers/JsonMetadataSchema",
+        "oj-dynamic/providers/OpenAPISchema",
+        "oj-dynamic/providers/ServiceFetchable",
+        "oj-dynamic/providers/ServiceMetadataProviderFactory",
+        "oj-dynamic/providers/ContainerMetadataProviderFactory",
+        "oj-dynamic/shared/CommonUtils",
+        "oj-dynamic/shared/DynamicComponentUtil",
+        "oj-dynamic/shared/DataProviderFactory",
+        "oj-dynamic/shared/UriTemplateUtils",
+        "oj-dynamic/shared/DefaultRestDataProvider",
+        "oj-dynamic/shared/DataProviderFactoryManager",
+        "oj-dynamic/shared/DynamicInputContacts",
+        "oj-dynamic/shared/DynamicLOVUtil",
+        "oj-dynamic/shared/DynamicInputRegistry",
+        "oj-dynamic/shared/DynamicInputFactory",
+        "oj-dynamic/shared/DynamicUIMetadata",
+        "oj-dynamic/shared/MetadataProvider",
+        "oj-dynamic/shared/polyfills",
+        "oj-dynamic/shared/MicroTaskQueue",
+        "oj-dynamic/shared/DynamicLayoutContextProperty",
+        "oj-dynamic/shared/ExtensibleMetadata",
+        "oj-dynamic/shared/SharedTypes",
+        "oj-dynamic/shared/UtilTypes",
+        "oj-dynamic/utils/CommonUtils",
+        "oj-dynamic/utils/DynamicComponentUtil",
+        "oj-dynamic/utils/DynamicFormUtils",
+        "oj-dynamic/utils/DynamicInputFactory",
+        "oj-dynamic/utils/DynamicLOVUtil",
+        "oj-dynamic/utils/DynamicLayoutEngine",
+        "oj-dynamic/utils/JetUtils",
+        "oj-dynamic/utils/KeyConversionDataPRovider",
+        "oj-dynamic/utils/LayoutExpressionUtils",
+        "oj-dynamic/utils/MetadataUtils",
+        "oj-dynamic/utils/UtilTypes"
+      ],
+      "oj-dynamic/component-bundle": [
+        "oj-dynamic/bind-field/loader",
+        "oj-dynamic/bind-section/loader",
+        "oj-dynamic/container/loader",
+        "oj-dynamic/form/loader",
+        "oj-dynamic/table/loader",
+        "oj-dynamic/table/resources/nls",
+        "oj-dynamic/form/resources/nls"
+      ],
+      "oj-sp/oj-sp-chat-component-bundle": [
+        "oj-sp/chat-message-block/loader",
+        "oj-sp/chat-container/loader",
+        "oj-sp/chat-text/loader",
+        "oj-sp/chat-input/loader",
+        "oj-sp/chat-card/loader",
+        "oj-sp/chat-action/loader",
+        "oj-sp/chat-attachment-message/loader",
+        "oj-sp/common/chat"
+      ],
+      "oj-sp/oj-sp-component-bundle": [
+        "oj-sp/advanced-create-edit/loader",
+        "oj-sp/analytics-canvas/loader",
+        "oj-sp/attachments-common/private/AttachmentManager",
+        "oj-sp/attachments-common/private/ComponentUtils",
+        "oj-sp/attachments-common/public/AttachmentPublic",
+        "oj-sp/attachments-simple/loader",
+        "oj-sp/attachments-viewer/loader",
+        "oj-sp/attachments/loader",
+        "oj-sp/bottom-drawer-template/loader",
+        "oj-sp/card-footer/loader",
+        "oj-sp/collection-container/loader",
+        "oj-sp/collection-container-advanced/loader",
+        "oj-sp/common-strings/resources/nls/common-component-strings",
+        "oj-sp/common-util/flex-util",
+        "oj-sp/common/EventDispatcher",
+        "oj-sp/common/action",
+        "oj-sp/common/activitystreamutils",
+        "oj-sp/common/avatarinfo",
+        "oj-sp/common/badge",
+        "oj-sp/common/contextualinfo",
+        "oj-sp/common/footertext",
+        "oj-sp/common/iconinfo",
+        "oj-sp/common/imageinfo",
+        "oj-sp/common/positionmanager",
+        "oj-sp/common/PreviousNextIterator",
+        "oj-sp/create-edit-drawer-template/loader",
+        "oj-sp/dashboard-grid/loader",
+        "oj-sp/dashboard-landing-page/loader",
+        "oj-sp/data-management-page/loader",
+        "oj-sp/dashboard-panel/loader",
+        "oj-sp/data-provider/AggregateSearchDataProvider",
+        "oj-sp/data-provider/AggregateSearchOpenApiTransforms",
+        "oj-sp/data-provider/AggregateSearchTransforms",
+        "oj-sp/data-provider/AutocompleteSearchTransforms",
+        "oj-sp/data-provider/BaseKeysHash",
+        "oj-sp/data-provider/CompareUtils",
+        "oj-sp/data-provider/DataProviderBindingContext",
+        "oj-sp/data-provider/DataProviderUtils",
+        "oj-sp/data-provider/KeysHashMap",
+        "oj-sp/data-provider/KeysHashSet",
+        "oj-sp/data-provider/RecentSearchesTransforms",
+        "oj-sp/data-provider/SmartSearchAndFilterDataProvider",
+        "oj-sp/data-provider/SmartSearchAndFilterTransforms",
+        "oj-sp/data-provider/SmartSuggestionChipsDataProvider",
+        "oj-sp/data-provider/SuggestionFiltersDataProvider",
+        "oj-sp/data-provider/SuggestionFiltersTransforms",
+        "oj-sp/diagram-builder/loader",
+        "oj-sp/diagram-node/loader",
+        "oj-sp/email-address-chip/loader",
+        "oj-sp/emo-button/cca-trace-fields-plugin",
+        "oj-sp/emo-button/loader",
+        "oj-sp/empty-state/loader",
+        "oj-sp/expandable-list-item/loader",
+        "oj-sp/filter-chip/loader",
+        "oj-sp/flex-filter-chip/loader",
+        "oj-sp/flex-switch/loader",
+        "oj-sp/foldout-layout/loader",
+        "oj-sp/foldout-panel/loader",
+        "oj-sp/foldout-panel-overflow/loader",
+        "oj-sp/foldout-panel-summarizing/loader",
+        "oj-sp/general-drawer-template/loader",
+        "oj-sp/general-overview-page/loader",
+        "oj-sp/guided-process/loader",
+        "oj-sp/header-create-edit-2/loader",
+        "oj-sp/header-create-edit/loader",
+        "oj-sp/header-general-overview-2/loader",
+        "oj-sp/header-general-overview/loader",
+        "oj-sp/header-navigation/loader",
+        "oj-sp/header-welcome-banner/loader",
+        "oj-sp/hierarchy-card/loader",
+        "oj-sp/hierarchy-card-info/loader",
+        "oj-sp/hierarchy-viewer/loader",
+        "oj-sp/horizontal-overview/loader",
+        "oj-sp/image-card/loader",
+        "oj-sp/image/loader",
+        "oj-sp/in-app-navigation/loader",
+        "oj-sp/input-address/loader",
+        "oj-sp/input-currency-conversion-rate/loader",
+        "oj-sp/input-currency/loader",
+        "oj-sp/input-email/loader",
+        "oj-sp/input-key-flex-field/loader",
+        "oj-sp/input-phone-number/loader",
+        "oj-sp/input-url/loader",
+        "oj-sp/item-overview-page/loader",
+        "oj-sp/item-overview/loader",
+        "oj-sp/list-item-template/loader",
+        "oj-sp/list-section/loader",
+        "oj-sp/message-banner-unsaved-changes/loader",
+        "oj-sp/message-dialog-destructive/loader",
+        "oj-sp/message-dialog-general/loader",
+        "oj-sp/message-unsaved-changes/loader",
+        "oj-sp/messages-banner/loader",
+        "oj-sp/messages-toast/loader",
+        "oj-sp/metric-card/loader",
+        "oj-sp/mini-card/loader",
+        "oj-sp/object-card/loader",
+        "oj-sp/overflow/loader",
+        "oj-sp/preview-card/loader",
+        "oj-sp/primary-action-feedback/loader",
+        "oj-sp/profile-card/loader",
+        "oj-sp/scoreboard/loader",
+        "oj-sp/scoreboard-metric-card/loader",
+        "oj-sp/select-single-currency/loader",
+        "oj-sp/select-single-item-template/loader",
+        "oj-sp/selection-chart-card/loader",
+        "oj-sp/simple-create-edit/loader",
+        "oj-sp/skill-chip/loader",
+        "oj-sp/smart-filter-search/loader",
+        "oj-sp/smart-filters/loader",
+        "oj-sp/smart-select-single/loader",
+        "oj-sp/summarizing-collection/loader",
+        "oj-sp/task-card/loader",
+        "oj-sp/thumbnail/loader",
+        "oj-sp/timestamp/loader",
+        "oj-sp/vertical-overview/loader",
+        "oj-sp/welcome-page/loader",
+        "oj-sp/timestamp/loader",
+        "oj-sp/flex-checkbox/loader"
+      ],
+      "oj-sp/oj-sp-input-rich-text-bundle": [
+        "oj-sp/input-rich-text/loader",
+        "oj-sp/input-rich-text-2/loader"
+      ],
+      "oj-sp/spectra-shell/oj-sp-shell-bundle": [
+        "oj-sp/about-page/loader",
+        "oj-sp/ask-oracle-navigation-list/loader",
+        "oj-sp/ask-oracle-notifications/loader",
+        "oj-sp/ask-oracle-search/loader",
+        "oj-sp/ask-oracle-user-profile/loader",
+        "oj-sp/ask-oracle/loader",
+        "oj-sp/common-strings/resources/nls/common-shell-strings",
+        "oj-sp/common-util/common-util",
+        "oj-sp/common-util/mobileVerticalSwipeHandler",
+        "oj-sp/common-util/fa-public-utils",
+        "oj-sp/css-additions/loader",
+        "oj-sp/fa-css/fa-css",
+        "oj-sp/global-header/loader",
+        "oj-sp/global-user-menu/loader",
+        "oj-sp/navigator/loader",
+        "oj-sp/notifications/loader",
+        "oj-sp/pillar-theme/loader",
+        "oj-sp/simple-ui-shell/loader",
+        "oj-sp/ask-oracle-splash-screen/loader"
+      ]
+
+    }
+  },
+  "constants": {
+    "xPDFsize": {
+      "type": "number",
+      "defaultValue": 600
+    },
+    "yPDFsize": {
+      "type": "number",
+      "defaultValue": 828
+    }
+  }
+}

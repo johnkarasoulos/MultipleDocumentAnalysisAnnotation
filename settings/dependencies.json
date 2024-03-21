@@ -1,0 +1,27 @@
+{
+  "component-dependencies": {
+    "oj-dyn": {
+      "version": "13.0.0",
+      "components": {
+        "bind-field": "13.0.0",
+        "container": "13.0.0",
+        "bind-section": "13.0.0",
+        "form": "13.0.0"
+      }
+    },
+    "oj-dynamic": {
+      "version": "13.0.0",
+      "components": {
+        "table": "13.0.0"
+      }
+    },
+    "oj-sp": {
+      "version": "2210.3.0",
+      "components": {
+        "attachments-viewer": "2210.3.0",
+        "attachments-simple": "2210.3.0",
+        "attachments": "2210.3.0"
+      }
+    }
+  }
+}

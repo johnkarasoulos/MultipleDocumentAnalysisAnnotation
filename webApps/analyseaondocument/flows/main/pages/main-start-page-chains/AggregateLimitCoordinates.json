@@ -1,0 +1,98 @@
+{
+  "root": "callFunctionCalculateHeight",
+  "description": "",
+  "actions": {
+    "callFunctionCalculateHeight": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateHeight",
+        "params": [
+          "{{ $application.variables.AggregateLimit_y_downright }}",
+          "{{ $application.variables.AggregateLimit_y_upright }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesAggregateLimitHeight"
+      }
+    },
+    "callFunctionCalculateWidth": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateWidth",
+        "params": [
+          "{{ $application.variables.AggregateLimit_x_downright }}",
+          "{{ $application.variables.AggregateLimit_x_downleft }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesAggregateLimitWidth"
+      }
+    },
+    "assignVariablesAggregateLimitHeight": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.AggregateLimit_height": {
+          "source": "{{ $chain.results.callFunctionCalculateHeight }}"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionCalculateWidth"
+      }
+    },
+    "assignVariablesAggregateLimitWidth": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.AggregateLimit_width": {
+          "source": "{{ $chain.results.callFunctionCalculateWidth }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesAggregateLimitX"
+      }
+    },
+    "assignVariablesAggregateLimitX": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.AggregateLimit_X": {
+          "source": "{{ $application.variables.AggregateLimit_x_downleft }}"
+        },
+        "$application.variables.AggregateLimit_Y": {
+          "source": "{{ $application.variables.AggregateLimit_y_downleft }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesDocFieldCurrentYcoord"
+      }
+    },
+    "assignVariablesDocFieldCurrentYcoord": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.docField_current_Ycoord": {
+          "source": "{{ $application.variables.AggregateLimit_Y }}"
+        }
+      },
+      "outcomes": {
+        "success": "callChainCalculateCurrentPage"
+      }
+    },
+    "callChainCalculateCurrentPage": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "calculateCurrentPage"
+      },
+      "outcomes": {
+        "success": "assignVariablesAggregateLimitPageNumber"
+      }
+    },
+    "assignVariablesAggregateLimitPageNumber": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.AggregateLimit_pageNumber": {
+          "source": "{{ $page.variables.currentPage }}"
+        }
+      }
+    }
+  }
+}

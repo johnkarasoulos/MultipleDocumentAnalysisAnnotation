@@ -1,0 +1,39 @@
+{
+  "component-dependencies": {
+    "oj-dyn": {
+      "version": "13.0.0",
+      "components": {
+        "container": "13.0.0",
+        "form": "13.0.0",
+        "bind-section": "13.0.0",
+        "bind-field": "13.0.0"
+      }
+    },
+    "oj-dynamic": {
+      "version": "13.0.0",
+      "components": {
+        "shared": "13.0.0",
+        "form": "13.0.0",
+        "utils": "13.0.0",
+        "bind-field": "13.0.0",
+        "providers": "13.0.0",
+        "table": "13.0.0"
+      }
+    },
+    "oj-sp": {
+      "version": "2210.3.0",
+      "components": {
+        "attachments-common": "2210.3.0",
+        "list-item-template": "2210.3.0",
+        "common-util": "2210.3.0",
+        "thumbnail": "2210.3.0",
+        "attachments-viewer": "2210.3.0",
+        "common-strings": "2210.3.0",
+        "attachments": "2210.3.0",
+        "common": "2210.3.0",
+        "preview-card": "2210.3.0",
+        "attachments-simple": "2210.3.0"
+      }
+    }
+  }
+}

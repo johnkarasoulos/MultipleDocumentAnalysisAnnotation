@@ -1,0 +1,381 @@
+{
+  "description": "",
+  "root": "resetVariablesFileURL",
+  "actions": {
+    "fireNotification": {
+      "module": "vb/action/builtin/fireNotificationEventAction",
+      "parameters": {
+        "target": "current",
+        "summary": "[[ $chain.results.sendFileForAnalysis.message.summary ]]",
+        "type": "error",
+        "displayMode": "persist"
+      }
+    },
+    "sendFileForAnalysis": {
+      "module": "vb/action/builtin/restAction",
+      "parameters": {
+        "endpoint": "ics/analyseDocument",
+        "contentType": "multipart/form-data",
+        "body": "{{ $variables.files[0] }}",
+        "uriParams": {
+          "tracker": "{{ $application.user.email+\" - VBCS\" }}"
+        },
+        "responseType": "analyseDocument-response"
+      },
+      "outcomes": {
+        "failure": "fireNotification",
+        "success": "assignVariablesReceivedFieldsFromAI"
+      }
+    },
+    "assignVariablesReceivedFieldsFromAI": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.ReceivedFieldsFromAI": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[0].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[1].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[1].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[2].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[2].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[3].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[3].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[4].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[4].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[5].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[5].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[6].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[6].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[7].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[7].fieldValue + \" - \" + $chain.results.sendFileForAnalysis.body.documentFields[8].fieldLabel + \":\" + $chain.results.sendFileForAnalysis.body.documentFields[8].fieldValue }}"
+        },
+        "$page.variables.NamedInsured": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[0].fieldValue }}"
+        },
+        "$page.variables.Rating": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[1].fieldValue }}"
+        },
+        "$page.variables.PolicyPeriod": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[2].fieldValue }}"
+        },
+        "$page.variables.EachOccurrenceLimit": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[3].fieldValue }}"
+        },
+        "$page.variables.AggregateLimit": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[4].fieldValue }}"
+        },
+        "$page.variables.AnnualPremium": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[5].fieldValue }}"
+        },
+        "$page.variables.TerrorismPremium": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[6].fieldValue }}"
+        },
+        "$page.variables.TotalPremium": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[7].fieldValue }}"
+        },
+        "$page.variables.Commission": {
+          "source": "{{ $chain.results.sendFileForAnalysis.body.documentFields[8].fieldValue }}"
+        },
+        "$page.variables.holdFile": {
+          "source": "{{ $chain.results.callFunctionAddImageFunction }}"
+        },
+        "$application.variables.NamedInsured_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.NamedInsured_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.NamedInsured_x_downright": {
+          "source": "{{ ($chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[1].x * $application.constants.xPDFsize) }}"
+        },
+        "$application.variables.NamedInsured_x_upleft": {
+          "source": "{{ ($chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[3].x * $application.constants.xPDFsize) }}"
+        },
+        "$application.variables.NamedInsured_x_upright": {
+          "source": "{{ ($chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[2].x * $application.constants.xPDFsize) }}"
+        },
+        "$application.variables.NamedInsured_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.NamedInsured_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.NamedInsured_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[0].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Rating_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.Rating_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[1].x) }}"
+        },
+        "$application.variables.Rating_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[2].x) }}"
+        },
+        "$application.variables.Rating_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[3].x) }}"
+        },
+        "$application.variables.Rating_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Rating_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Rating_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Rating_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[1].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.PolicyPeriod_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.PolicyPeriod_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[1].x) }}"
+        },
+        "$application.variables.PolicyPeriod_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[2].x) }}"
+        },
+        "$application.variables.PolicyPeriod_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[3].x) }}"
+        },
+        "$application.variables.PolicyPeriod_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.PolicyPeriod_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.PolicyPeriod_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.PolicyPeriod_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[2].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[1].x) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[2].x) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[3].x) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.EachOccurrenceLimit_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[3].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.AggregateLimit_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.AggregateLimit_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[1].x) }}"
+        },
+        "$application.variables.AggregateLimit_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[2].x) }}"
+        },
+        "$application.variables.AggregateLimit_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[3].x) }}"
+        },
+        "$application.variables.AggregateLimit_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.AggregateLimit_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.AggregateLimit_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.AggregateLimit_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[4].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.AnnualPremium_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[0].x)  }}"
+        },
+        "$application.variables.AnnualPremium_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[1].x)  }}"
+        },
+        "$application.variables.AnnualPremium_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[2].x)  }}"
+        },
+        "$application.variables.AnnualPremium_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[3].x)  }}"
+        },
+        "$application.variables.AnnualPremium_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize))  }}"
+        },
+        "$application.variables.AnnualPremium_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize))  }}"
+        },
+        "$application.variables.AnnualPremium_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize))  }}"
+        },
+        "$application.variables.AnnualPremium_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[5].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TerrorismPremium_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.TerrorismPremium_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[1].x) }}"
+        },
+        "$application.variables.TerrorismPremium_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[2].x) }}"
+        },
+        "$application.variables.TerrorismPremium_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[3].x) }}"
+        },
+        "$application.variables.TerrorismPremium_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TerrorismPremium_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TerrorismPremium_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TerrorismPremium_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[6].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TotalPremium_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.TotalPremium_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[1].x) }}"
+        },
+        "$application.variables.TotalPremium_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[2].x) }}"
+        },
+        "$application.variables.TotalPremium_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[3].x) }}"
+        },
+        "$application.variables.TotalPremium_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TotalPremium_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TotalPremium_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.TotalPremium_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[7].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Commission_x_downleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[0].x) }}"
+        },
+        "$application.variables.Commission_x_downright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[1].x) }}"
+        },
+        "$application.variables.Commission_x_upleft": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[2].x) }}"
+        },
+        "$application.variables.Commission_x_upright": {
+          "source": "{{ ($application.constants.xPDFsize * $chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[3].x) }}"
+        },
+        "$application.variables.Commission_y_downleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[0].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Commission_y_downright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[1].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Commission_y_upleft": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[2].y * $application.constants.yPDFsize)) }}"
+        },
+        "$application.variables.Commission_y_upright": {
+          "source": "{{ ($application.constants.yPDFsize - ($chain.results.sendFileForAnalysis.body.documentFields[8].boundingPolygon.normalizedVertices[3].y * $application.constants.yPDFsize)) }}"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionNumberOfPagesOfPDF"
+      }
+    },
+    "callFunctionAddImageFunction": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "AddImageFunction",
+        "params": [
+          "{{ $variables.files[0] }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesFileURL"
+      }
+    },
+    "assignVariablesFileURL": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.fileURL": {
+          "source": "{{ $chain.results.callFunctionAddImageFunction.url }}"
+        }
+      },
+      "outcomes": {
+        "success": "sendFileForAnalysis"
+      }
+    },
+    "callChainGeneratePDF": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "generatePDF"
+      }
+    },
+    "callFunctionNumberOfPagesOfPDF": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "numberOfPagesOfPDF",
+        "params": [
+          "{{ $page.variables.holdFile.data }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesDocNumberOfPages"
+      }
+    },
+    "assignVariablesDocNumberOfPages": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.docNumberOfPages": {
+          "source": "{{ $chain.results.callFunctionNumberOfPagesOfPDF }}"
+        }
+      },
+      "outcomes": {
+        "success": "callChainGeneratePDF"
+      }
+    },
+    "resetVariablesFileURL": {
+      "module": "vb/action/builtin/resetVariablesAction",
+      "parameters": {
+        "variables": [
+          "$page.variables.fileURL",
+          "$page.variables.docField_previous_Ycoord",
+          "$page.variables.AggregateLimit",
+          "$page.variables.AnnualPremium",
+          "$page.variables.Commission",
+          "$page.variables.EachOccurrenceLimit",
+          "$page.variables.NamedInsured",
+          "$page.variables.PolicyPeriod",
+          "$page.variables.Rating",
+          "$page.variables.TerrorismPremium",
+          "$page.variables.TotalPremium"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesCurrentPage"
+      }
+    },
+    "assignVariablesCurrentPage": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.currentPage": {
+          "source": "0"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionAddImageFunction"
+      }
+    }
+  },
+  "variables": {
+    "files": {
+      "required": true,
+      "type": "object[]",
+      "input": "fromCaller"
+    }
+  }
+}

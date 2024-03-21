@@ -1,0 +1,17 @@
+{
+  "component-dependencies": {
+    "oj-sp": {
+      "version": "2210.3.0",
+      "components": {
+        "attachments": "2210.3.0",
+        "attachments-viewer": "2210.3.0"
+      }
+    },
+    "oj-dyn": {
+      "version": "13.0.0",
+      "components": {
+        "form": "13.0.0"
+      }
+    }
+  }
+}

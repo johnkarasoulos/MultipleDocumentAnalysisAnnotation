@@ -1,0 +1,67 @@
+{
+  "root": "callFunctionDisplayPagePosition",
+  "description": "",
+  "actions": {
+    "if": {
+      "module": "vb/action/builtin/ifAction",
+      "parameters": {
+        "condition": "[[ (($page.variables.docField_previous_Ycoord + 10) >= $page.variables.docField_current_Ycoord) ]]"
+      },
+      "outcomes": {
+        "false": "assignVariablesCurrentPage",
+        "true": "assignVariablesDocFieldPreviousYcoord"
+      }
+    },
+    "assignVariablesCurrentPage": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.currentPage": {
+          "source": "{{ $page.variables.currentPage + 1 }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesDocFieldPreviousYcoord"
+      }
+    },
+    "assignVariablesDocFieldPreviousYcoord": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.docField_previous_Ycoord": {
+          "source": "{{ $page.variables.docField_current_Ycoord }}"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionDisplayPagePosition2"
+      }
+    },
+    "callFunctionDisplayPagePosition": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "displayPagePosition",
+        "params": [
+          "{{ $page.variables.previousPage }}",
+          "{{ $page.variables.currentPage }}",
+          "{{ $page.variables.docField_previous_Ycoord }}",
+          "{{ $page.variables.docField_current_Ycoord }}"
+        ]
+      },
+      "outcomes": {
+        "success": "if"
+      }
+    },
+    "callFunctionDisplayPagePosition2": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "displayPagePosition",
+        "params": [
+          "{{ $page.variables.previousPage }}",
+          "{{ $page.variables.currentPage }}",
+          "{{ $page.variables.docField_previous_Ycoord }}",
+          "{{ $page.variables.docField_current_Ycoord }}"
+        ]
+      }
+    }
+  }
+}

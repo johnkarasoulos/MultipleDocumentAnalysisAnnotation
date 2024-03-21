@@ -1,0 +1,98 @@
+{
+  "root": "callFunctionCalculateHeight",
+  "description": "",
+  "actions": {
+    "callFunctionCalculateHeight": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateHeight",
+        "params": [
+          "{{ $application.variables.PolicyPeriod_y_downright }}",
+          "{{ $application.variables.PolicyPeriod_y_upright }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesPolicyPeriodHeight"
+      }
+    },
+    "callFunctionCalculateWidth": {
+      "module": "vb/action/builtin/callModuleFunctionAction",
+      "parameters": {
+        "module": "[[ $functions ]]",
+        "functionName": "calculateWidth",
+        "params": [
+          "{{ $application.variables.PolicyPeriod_x_downright }}",
+          "{{ $application.variables.PolicyPeriod_x_downleft }}"
+        ]
+      },
+      "outcomes": {
+        "success": "assignVariablesPolicyPeriodWidth"
+      }
+    },
+    "assignVariablesPolicyPeriodHeight": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.PolicyPeriod_height": {
+          "source": "{{ $chain.results.callFunctionCalculateHeight }}"
+        }
+      },
+      "outcomes": {
+        "success": "callFunctionCalculateWidth"
+      }
+    },
+    "assignVariablesPolicyPeriodWidth": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.PolicyPeriod_width": {
+          "source": "{{ $chain.results.callFunctionCalculateWidth }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesPolicyPeriodX"
+      }
+    },
+    "assignVariablesPolicyPeriodX": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.PolicyPeriod_x": {
+          "source": "{{ $application.variables.PolicyPeriod_x_downleft }}"
+        },
+        "$application.variables.PolicyPeriod_y": {
+          "source": "{{ $application.variables.PolicyPeriod_y_downleft }}"
+        }
+      },
+      "outcomes": {
+        "success": "assignVariablesDocFieldCurrentYcoord"
+      }
+    },
+    "assignVariablesDocFieldCurrentYcoord": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$page.variables.docField_current_Ycoord": {
+          "source": "{{ $application.variables.PolicyPeriod_y }}"
+        }
+      },
+      "outcomes": {
+        "success": "callChainCalculateCurrentPage"
+      }
+    },
+    "callChainCalculateCurrentPage": {
+      "module": "vb/action/builtin/callChainAction",
+      "parameters": {
+        "id": "calculateCurrentPage"
+      },
+      "outcomes": {
+        "success": "assignVariablesPolicyPeriodPageNumber"
+      }
+    },
+    "assignVariablesPolicyPeriodPageNumber": {
+      "module": "vb/action/builtin/assignVariablesAction",
+      "parameters": {
+        "$application.variables.PolicyPeriod_pageNumber": {
+          "source": "{{ $page.variables.currentPage }}"
+        }
+      }
+    }
+  }
+}
